@@ -1,6 +1,7 @@
 from node import TreeNode
 from queue import Queue
 
+
 class BinarySearchTree:
     def __init__(self):
         self.root = None

@@ -24,3 +24,9 @@ class TreeNode:
     node_LHS: 'TreeNode' = None
     node_RHS: 'TreeNode' = None
     node_parent: 'TreeNode' = None
+
+
+@dataclass
+class PriorityNode:
+    value: object = None
+    priority: int = None
