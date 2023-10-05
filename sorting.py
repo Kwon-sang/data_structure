@@ -35,8 +35,8 @@ def merge_sort(arr):
         else:
             tmp_arr2.append(arr[i])
     # Recursion
-    arr_sorted1 = merge_sort(tmp_arr1)
-    arr_sorted2 = merge_sort(tmp_arr2)
+    tmp_arr1 = merge_sort(tmp_arr1)
+    tmp_arr2 = merge_sort(tmp_arr2)
     # Aggregation
     idx_count1 = 0
     idx_count2 = 0
