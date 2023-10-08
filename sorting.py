@@ -54,3 +54,23 @@ def merge_sort(arr):
             arr[i] = tmp_arr1[idx_count1]
             idx_count1 += 1
     return arr
+
+
+def quick_sort(arr, idx_pivot=0):
+    if len(arr) <= 1:
+        return arr
+
+    pivot_value = arr[idx_pivot]
+    less = []
+    greater = []
+    for i in range(len(arr)):
+        if i == idx_pivot:
+            continue
+        if arr[i] > pivot_value:
+            greater.append(arr[i])
+        else:
+            less.append(arr[i])
+
+    return quick_sort(less) + [pivot_value] + quick_sort(greater)
+
+
