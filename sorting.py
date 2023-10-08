@@ -1,3 +1,4 @@
+# O(N^2) Sorting Algorithms - Sequential and comparison based sorting algorithms
 def bubble_sort(arr):
     for i in range(0, len(arr)):
         for j in range(0, len(arr)-1-i):
@@ -22,6 +23,7 @@ def insertion_sort(arr):
     return arr
 
 
+# O(NlogN) Sorting Algorithms - Recursion based sorting algorithms
 def merge_sort(arr):
     # Escape routine
     if len(arr) == 1:
@@ -72,5 +74,35 @@ def quick_sort(arr, idx_pivot=0):
             less.append(arr[i])
 
     return quick_sort(less) + [pivot_value] + quick_sort(greater)
+
+
+# O(N) Sorting Algorithms - Not comparison-based approach
+def counting_sort(arr):
+    """Count the occurrence and produce a sequence based upon the counts
+
+    Assumption : The sequence contain integers ranging form 0 to K
+
+    Time complexity: O(N+R), R is the range of the sequence values(maximum value)
+    """
+    _max = -9999
+    _min = 9999
+    for i in range(len(arr)):
+        if arr[i] > _max:
+            _max = arr[i]
+        if arr[i] < _min:
+            _min = arr[i]
+
+    counting = [0 for i in range(_max - _min + 1)]
+    for i, value in enumerate(arr):
+        counting[value - _min] += 1
+
+    cnt = 0
+    for i in range(_max - _min + 1):
+        for _ in range(counting[i]):
+            arr[cnt] = i + _min
+            cnt += 1
+
+    return arr
+
 
 

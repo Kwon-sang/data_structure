@@ -7,41 +7,39 @@ class BinarySearchTree:
         self.root = None
 
     def search(self, value, node=None):
-        if not self.root:
-            return False
         if not node:
             node = self.root
+        if not self.root:
+            return False
 
         if value == node.value:
             return True
-        if value > node.value:
+        elif value > node.value:
             if not node.node_RHS:
                 return False
             else:
                 return self.search(value=value, node=node.node_RHS)
-        if value < node.value:
+        else:
             if not node.node_LHS:
                 return False
             else:
                 return self.search(value=value, node=node.node_LHS)
 
     def insert(self, value, node=None):
-        # root node가 비어있을 경우(Empty tree)
+        if not node:
+            node = self.root
         if not self.root:
             self.root = TreeNode(value=value)
             return
-        # node parameter 가 주어지지 않았을 경우(root를 start node 세팅)
-        if not node:
-            node = self.root
 
         if value == node.value:
             return
-        if value > node.value:
+        elif value > node.value:
             if not node.node_RHS:
                 node.node_RHS = TreeNode(value=value, node_parent=node)
             else:
                 self.insert(value=value, node=node.node_RHS)
-        if value < node.value:
+        else:
             if not node.node_LHS:
                 node.node_LHS = TreeNode(value=value, node_parent=node)
             else:
@@ -115,8 +113,9 @@ class BinarySearchTree:
     def traverse_pre_order(self, node=None):
         if not node:
             node = self.root
-        result = []
-        result.append(node.value)
+        if not self.root:
+            return []
+        result = [node.value]
         if node.node_LHS:
             result += self.traverse_pre_order(node=node.node_LHS)
         if node.node_RHS:
@@ -158,3 +157,8 @@ class BinarySearchTree:
                 q.enqueue(value=node.node_LHS)
             if node.node_RHS:
                 q.enqueue(value=node.node_RHS)
+
+
+if __name__ == "__main__":
+    arr = [None]
+    print(bool(arr))
