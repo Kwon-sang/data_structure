@@ -1,4 +1,7 @@
 # O(N^2) Sorting Algorithms - Sequential and comparison based sorting algorithms
+import math
+
+
 def bubble_sort(arr):
     for i in range(0, len(arr)):
         for j in range(0, len(arr)-1-i):
@@ -80,9 +83,9 @@ def quick_sort(arr, idx_pivot=0):
 def counting_sort(arr):
     """Count the occurrence and produce a sequence based upon the counts
 
-    Assumption : The sequence contain integers ranging form 0 to K
+        Assumption : The sequence contain integers ranging form 0 to K
 
-    Time complexity: O(N+R), R is the range of the sequence values(maximum value)
+        Time complexity: O(N+R), R is the range of the sequence values(maximum value)
     """
     _max = -9999
     _min = 9999
@@ -105,4 +108,56 @@ def counting_sort(arr):
     return arr
 
 
+def radix_sort(arr):
+    """Sort from the least importance digit to the most important digit
+
+        Assumption: The sequence contains integers
+
+        Time complexity: O(ND), D is the digit number of the largest value
+    """
+    # Find the largest digit number
+    _max = -999_999
+    for value in arr:
+        _max = max(_max, value)
+    D = int(math.log10(_max))
+
+    for digit in range(D+1):
+        buckets = [[] for _ in range(10)]
+
+        for value in arr:
+            digit_value = int(value / math.pow(10, digit)) % 10
+            buckets[digit_value].append(value)
+
+        count = 0
+        for i in range(0, 10):
+            for j in range(len(buckets[i])):
+                arr[count] = buckets[i][j]
+                count += 1
+    return arr
+
+
+# Performance Test of Sorting Algorithms
+if __name__ == "__main__":
+    import random
+    from time import time
+
+    N = 10000
+    arr = [random.randrange(0, 100) for i in range(N)]
+    result = sorted(arr)
+
+    sorting_methods = [
+        bubble_sort,
+        selection_sort,
+        insertion_sort,
+        merge_sort,
+        quick_sort,
+        counting_sort,
+        radix_sort
+    ]
+    for sort_method in sorting_methods:
+        arr_copied = arr.copy()
+        start = time()
+        assert sort_method(arr_copied) == result
+        end = time()
+        print(f"{sort_method.__name__:<15s} : take time {end-start:.3f} s")
 
