@@ -37,57 +37,59 @@ class BinarySearchTree:
         elif value > node.value:
             if not node.node_RHS:
                 node.node_RHS = TreeNode(value=value, node_parent=node)
+                return
             else:
                 self.insert(value=value, node=node.node_RHS)
         else:
             if not node.node_LHS:
                 node.node_LHS = TreeNode(value=value, node_parent=node)
+                return
             else:
                 self.insert(value=value, node=node.node_LHS)
-        return
 
     def delete(self, value, node=None):
         if not node:
             node = self.root
+        if not self.root:
+            raise ValueError("The tree is empty")
 
         if value > node.value:
             return self.delete(value, node.node_RHS)
         if value < node.value:
             return self.delete(value, node.node_LHS)
         if value == node.value:
-            # Has Two child
+            # The case of existing Two-Child : hoisting the minimum value of subtree
             if node.node_LHS and node.node_RHS:
                 node_min = self._find_min(node=node.node_RHS)
                 node.value = node_min.value
                 self.delete(value=node_min.value, node=node_min)
                 return
 
-            # Has one child
+            # The case of existing LHS One-Child
             parent = node.node_parent
-            ## when has just a LHS node
             if node.node_LHS:
                 if node == self.root:
                     self.root = node.node_LHS
-                elif node == parent.node_LHS:   ### the node is parent's LHS node
+                elif node == parent.node_LHS:
                     parent.node_LHS = node.node_LHS
                     node.node_LHS.node_parent = parent
-                else:                           ### the node is parent's RHS node
+                else:
                     parent.node_RHS = node.node_LHS
                     node.node_LHS.node_parent = parent
                 return
-            ## when has just a RHS node
+            # The case of existing RHS One-Child
             if node.node_RHS:
-                if node == self.root:           ### the node is parent's LHS node
+                if node == self.root:
                     self.root = node.node_RHS
                 elif node == parent.node_LHS:
                     parent.node_LHS = node.node_RHS
                     node.node_RHS.node_parent = parent
-                else:                           ### the node is parent's RHS node
+                else:
                     parent.node_RHS = node.node_RHS
                     node.node_RHS.node_parent = parent
                 return
 
-            # Has no child
+            # The case of No-Child
             if node == self.root:
                 self.root = None
             elif node == parent.node_LHS:
@@ -99,6 +101,9 @@ class BinarySearchTree:
     def _find_max(self, node=None):
         if not node:
             node = self.root
+        if not self.root:
+            raise ValueError("The tree is empty")
+
         if not node.node_RHS:
             return node
         return self._find_max(node=node.node_RHS)
@@ -106,6 +111,9 @@ class BinarySearchTree:
     def _find_min(self, node=None):
         if not node:
             node = self.root
+        if not self.root:
+            raise ValueError("The tree is empty")
+
         if not node.node_LHS:
             return node
         return self._find_min(node=node.node_LHS)
@@ -115,7 +123,10 @@ class BinarySearchTree:
             node = self.root
         if not self.root:
             return []
-        result = [node.value]
+
+        result = []
+
+        result.append(node.value)
         if node.node_LHS:
             result += self.traverse_pre_order(node=node.node_LHS)
         if node.node_RHS:
@@ -125,7 +136,11 @@ class BinarySearchTree:
     def traverse_in_order(self, node=None):
         if not node:
             node = self.root
+        if not self.root:
+            return []
+
         result = []
+
         if node.node_LHS:
             result += self.traverse_in_order(node=node.node_LHS)
         result.append(node.value)
@@ -136,6 +151,9 @@ class BinarySearchTree:
     def traverse_post_order(self, node=None):
         if not node:
             node = self.root
+        if not self.root:
+            return []
+
         result = []
         if node.node_LHS:
             result += self.traverse_post_order(node=node.node_LHS)
@@ -157,8 +175,3 @@ class BinarySearchTree:
                 q.enqueue(value=node.node_LHS)
             if node.node_RHS:
                 q.enqueue(value=node.node_RHS)
-
-
-if __name__ == "__main__":
-    arr = [None]
-    print(bool(arr))

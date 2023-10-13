@@ -1,7 +1,4 @@
 # O(N^2) Sorting Algorithms - Sequential and comparison based sorting algorithms
-import math
-
-
 def bubble_sort(arr):
     for i in range(0, len(arr)):
         for j in range(0, len(arr)-1-i):
@@ -109,6 +106,7 @@ def counting_sort(arr):
 
 
 def radix_sort(arr):
+    import math
     """Sort from the least importance digit to the most important digit
 
         Assumption: The sequence contains integers
