@@ -44,7 +44,6 @@ class SinglyLinkedList:
     def __len__(self):
         return self.size
 
-
 class DoublyLinkedList:
     def __init__(self):
         self.node_head = DoublyNode(is_head=True)
